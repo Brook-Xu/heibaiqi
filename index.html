@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>黑白棋</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="Shield UI Trial Version.css" />
+	<script type="text/javascript" src="Shield UI Trial Version.js"></script>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="login test">
+
+    <link rel="stylesheet" type="text/css" href="othello.css">
+
+    <script type="text/javascript" src="event.js"></script>
+    <script type="text/javascript" src="animation.js"></script>
+    <script type="text/javascript" src="logic.js"></script>
+</head>
+<body>
+<div id="homepage">
+	<div>
+		<button id="enter">进入游戏</button>
+	</div>
+	<div class="pull-right">
+		<p id="name">黑<br><br>白<br><br>棋</p>
+	</div>
+	<div class="pull-right" id="saying">
+		<span id="baf" style="display: none;">八</span>
+		<span id="zong" style="display: none;">纵</span>
+		<span id="bas" style="display: none;">八</span>
+		<span id="heng" style="display: none;">横</span><br><br>
+		<span id="ke" style="display: none;">克</span>
+		<span id="er" style="display: none;">而</span>
+		<span id="bu" style="display: none;">不</span>
+		<span id="gong" style="display: none;">攻</span><br><br>
+		<span id="hei" style="display: none;">黑</span>
+		<span id="bai" style="display: none;">白</span>
+		<span id="jiao" style="display: none;">交</span>
+		<span id="shou" style="display: none;">手</span><br><br>
+		<span id="sheng" style="display: none;">胜</span>
+		<span id="fu" style="display: none;">负</span>
+		<span id="wu" style="display: none;">无</span>
+		<span id="chang" style="display: none;">常</span>
+	</div>
+</div>
+<div id="gamePage" style="display: none;">
+	<div class="container part">
+		<div class="row topOfPage">
+			<div class="col-md-12" style="padding-top: 15px;"><!--玩家信息界面-->
+				<div class="col-md-4"><!--黑棋玩家-->
+					<figure class="pull-left" id="playerBlack">                    
+						<span class="fa fa-user personicon"></sapn>&nbsp;&nbsp;
+	                	<span class="pull-right">黑棋玩家</span>
+	                	<span id="blackResult"></span>
+	                	<br>
+	                </figure>
+				</div>
+				<div class="col-md-4"><!--白棋玩家-->
+					<figure class="pull-right" id="playerWhite">
+	                    <span class="fa fa-user personicon"></sapn>&nbsp;&nbsp;
+	                    <span class="pull-right">白棋玩家</span>
+	                    <span id="whiteResult"></span>
+	                    <br>
+	                </figure>
+				</div>
+				<div class="col-md-4 text-center"><!--黑白子数-->
+					<div class="pointCount">
+						<span>黑</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="gradeBlack">2</span><span style="color: red;"><b>:</b></span><span id="gradeWhite">2</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;">白</span>
+					</div>
+					<span>回合数</span><span><b>:</b></span><span id="roundNumber">0</span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10"><!--游戏界面-->
+				<div id="chessboard">
+					<div id="buttons">
+						<button id="startGame">开始游戏</button><br>
+						<button id="goBack">悔&nbsp;棋</button><br>
+						<button id="restartGame">重新开始</button><br>
+						<button id="aiGame">山寨版人机对战</button><br>
+						<div id="userChoice" style="display: none;">
+							<button id="useBlack" style="display: none;">执黑</button><br>
+							<button id="useWhite" style="display: none;">执白</button>
+						</div>
+						<audio id="sound" src="zzzs.mp3" preload="auto" autoplay="autoplay" loop="loop">
+							<p>您的浏览器不支持audio，请使用Chrome。 </p>
+						</audio>
+					</div>
+					<center>
+						<img src="lineIn.jpg" id="lineInBackground" style="display: none;">
+						<img src="lineOut.jpg" id="lineOutBackground" style="display: none;">
+						<canvas id="boardCanvas" width="516" height="516">您的浏览器不支持canvas，请使用Chrome。 </canvas>
+					</center>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+		<div class="row" style="margin-left: 0px;">
+			<div class="col-md-2"></div>
+			<div class="col-md-8" id="information"><!--提示信息界面-->
+				<h4 class="text-center">黑白棋</h4>
+				<hr>
+				<p id="reminder">游戏规则： 黑白棋游戏开始时，棋盘上已经交叉放好了四颗棋子。其中两颗是黑棋，另两颗是白棋。黑棋总是先走。
+				当您的棋子在任一直线方向（水平、垂直和斜线方向）包围了对手的棋子时，就可以翻转这些棋子的颜色，使它们成为您方的颜色。
+				走棋的唯一规则是只能走包围并翻转对手的棋子。每一回合都必须至少翻转一颗对手的棋子。
+				按规则不能再走棋时，这一回合弃权。这一步的行棋权将被交给对方。
+				<br>
+				双方都没有棋子可以下时棋局结束，以棋子数目来计算胜负，棋子多的一方获胜。
+				在棋盘还没有下满时，如果一方的棋子已经被对方吃光，则棋局也结束。将对手棋子吃光的一方获胜。</p>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
